@@ -18,6 +18,9 @@ logout_server <- function(input,
                           session,
                           isLogged = reactive(FALSE),
                           textlogged = "You are logged in") {
+moduleServer(
+    id,
+function(input, output, session) {
 
   observeEvent(isLogged(), {
     if(isLogged()){
@@ -35,4 +38,4 @@ logout_server <- function(input,
   })
 
   reactive(input$logout)
-}
+})}

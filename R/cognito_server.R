@@ -15,7 +15,10 @@
 #' @return reactiveValues (isLogged and userdata) and a callback function to do logout in Cognito.
 #' @author Pablo Pagnone
 #' @export
-cognito_server <- function(input, output, session, with_cookie = FALSE, cookiename = "cognitor", cookie_expire = 7){
+cognito_server <- function(id, with_cookie = FALSE, cookiename = "cognitor", cookie_expire = 7){
+moduleServer(
+    id,
+function(input, output, session) {
 
   # Define params for Cognito Login ####
   cognito_config <- get_config()
@@ -25,7 +28,7 @@ cognito_server <- function(input, output, session, with_cookie = FALSE, cookiena
 
   if(with_cookie) {
     # Cookie support enabled.
-    cookiemod <- callModule(cookie_server, "cookiemod", cookie_name = cookiename, cookie_expire = cookie_expire)
+    cookiemod <- cookie_server("cookiemod", cookie_name = cookiename, cookie_expire = cookie_expire)
   }
 
   # Reactive values that return this module. ####
@@ -117,4 +120,4 @@ cognito_server <- function(input, output, session, with_cookie = FALSE, cookiena
   }, priority = 100000)
 
   return
-}
+})}
